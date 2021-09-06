@@ -104,7 +104,7 @@ public class ThirdPersonController : MonoBehaviour
     #region 屬性 Property 
 
     #region 屬性練習
-    /*
+    
      
     //儲存資料，與欄位相同
     //差異在於:可以設定存取權限
@@ -132,7 +132,12 @@ public class ThirdPersonController : MonoBehaviour
             _hp = value;
         }
     }
-    */
+    /**/
+
+    public KeyCode keyJump;
+    
+
+    
     #endregion
     #endregion
 
@@ -147,6 +152,36 @@ public class ThirdPersonController : MonoBehaviour
     {
         print("我是自訂的方法~~");
     }
+    private int RetureJump()
+    {
+        return 999;
+    }
+    #region 參數語法
+    /*
+    //參數語法 : 資料類型 參數名稱
+    private void Skill(int damage)
+    {
+        print("參數版本-傷害值" + damage);
+        print("技能特效");
+    }
+    
+    //不使用參數，降低維護與擴充性
+    private void skill100()
+    {
+        print("參數版本-傷害值" + 100);
+        print("技能特效");
+    }
+    private void skill200()
+    {
+        print("參數版本-傷害值" + 200);
+        print("技能特效");
+    }
+    private void skill1000()
+    {
+        print("參數版本-傷害值" + 1000);
+        print("技能特效");
+    }*/
+    #endregion
     #endregion
 
     #region 事件 Event 
@@ -183,6 +218,12 @@ public class ThirdPersonController : MonoBehaviour
 
         // 呼叫自訂的方法:方法名稱();
         Text();
+        //呼叫有傳回值的方法
+        //1.區域變數指的是指定傳回值-區域變數僅能在此結構(大括號)內存取
+        int j = RetureJump();
+        print("跳躍值:" + j);
+        //2.將傳回方法當成值使用
+        print("A跳躍值:" + (RetureJump() + 1));
     }
 
 
