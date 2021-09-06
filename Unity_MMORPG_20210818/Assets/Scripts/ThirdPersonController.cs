@@ -14,6 +14,7 @@ using UnityEngine.Video;    //引用 影片 API
 public class ThirdPersonController : MonoBehaviour
 {
     #region 欄位 Freld
+    /*
     //儲存遊戲資料，例如:移動速度，跳躍高度..
     //常用四大類型:整數，浮點數，字串，布林值
     //欄位語法:修飾詞，資料類型，欄位名稱(指定 預設值) 結尾
@@ -52,7 +53,7 @@ public class ThirdPersonController : MonoBehaviour
     public AudioSource aud;
     public Rigidbody rdbody;
     public Animator ani;
-
+    */
 
 
 
@@ -109,6 +110,7 @@ public class ThirdPersonController : MonoBehaviour
     //儲存資料，與欄位相同
     //差異在於:可以設定存取權限
     //屬性語法:修飾詞 資料類型 屬性名稱{ 取; 存; }
+    /*
     public int readAndWrite { get; set; }
     public int read { get; }
     // 唯讀屬性:透過get 設定預設值，關鍵字 return 為傳回值
@@ -132,12 +134,12 @@ public class ThirdPersonController : MonoBehaviour
             _hp = value;
         }
     }
-    /**/
+    */
 
     public KeyCode keyJump;
-    
 
-    
+
+
     #endregion
     #endregion
 
@@ -148,7 +150,47 @@ public class ThirdPersonController : MonoBehaviour
     //格式化 排版 ctrl + K + D
     //名稱顏色為淡黃色 - 沒有被呼叫
     //名稱顏色為黃色 - 有被呼叫
-    
+
+    /// <summary>
+    /// 移動
+    /// </summary>
+    /// <param name="speed">移動速度</param>    
+    private void move(float speed)
+    {
+        
+    }
+    /// <summary>
+    /// 移動按鍵輸入
+    /// </summary>
+    /// <returns>回傳值浮點數0</returns>
+    private float move()
+    {
+        return 0;
+    }
+    /// <summary>
+    /// 檢查地板
+    /// </summary>
+    /// <returns>回傳布林值false</returns>
+    private bool Floor()
+    {
+        return false;
+    }
+    /// <summary>
+    /// 跳躍
+    /// </summary>
+    private void Jump()
+    {
+      
+    }
+    /// <summary>
+    /// 更新動畫
+    /// </summary>
+    private void updata()
+    {
+
+    }
+
+    /*
     private void Text()
     {
         print("我是自訂的方法~~");
@@ -157,8 +199,9 @@ public class ThirdPersonController : MonoBehaviour
     {
         return 999;
     }
+    */
     #region 參數語法
-    
+    /*
     //參數語法 : 資料類型 參數名稱
     private void Skill(int damage,string effect = "灰塵特效",string sound ="喀喀喀")
     {
@@ -179,7 +222,7 @@ public class ThirdPersonController : MonoBehaviour
         print(name + "的BMI值:");
         return weight / (height * height);
     }
-    /*
+    
     //不使用參數，降低維護與擴充性
     private void skill100()
     {
@@ -229,8 +272,8 @@ public class ThirdPersonController : MonoBehaviour
         //屬性存取練習
         print("前HP:" + hp);
         hp = 100;
-        print("後HP:" + hp);*/
-        #endregion
+        print("後HP:" + hp);
+
         print(BMI(73f, 1.7f, "你是誰??"));
         
         // 呼叫自訂的方法:方法名稱();
@@ -244,7 +287,15 @@ public class ThirdPersonController : MonoBehaviour
 
         Skill(300);
         Skill(500,sound:"咻咻咻");         //有多個參數可使用指名參數的語法  參數語法:值  
-        
+        */
+        #endregion
+
+        move(100f);
+        move();
+        Floor();
+        Jump();
+        Update();
+
 
     }
 
