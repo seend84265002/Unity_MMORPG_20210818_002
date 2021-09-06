@@ -32,26 +32,28 @@ public class ThirdPersonController : MonoBehaviour
     [Header("跳躍高度"), Tooltip("用來調整角色跳躍高度"), Range(0, 1000)]
     public int jump = 100;
 
-    [Header("檢查地板資料")] 
+    [Header("檢查地板資料")]
     [Tooltip("檢查角色是否在地板上面")]
-    public bool floor ;
-    public Vector3  v3checkGroundoffect  ;
+    public bool floor;
+    public Vector3 v3checkGroundoffect;
     [Range(0, 3)]
-    public float radius = 0.2f ;
+    public float radius = 0.2f;
 
     [Header("音效檔案")]
     public AudioClip Audiojump;
     public AudioClip Audiofloor;
 
     [Header("動畫參數")]
-    public string aniWalk = "走路開關" ;
-    public string aniRun  = "跑步開關" ;
-    public string aniHurt = "受傷觸發" ;
-    public string aniDie  = "死亡觸發" ;
+    public string aniWalk = "走路開關";
+    public string aniRun = "跑步開關";
+    public string aniHurt = "受傷觸發";
+    public string aniDie = "死亡觸發";
 
     public AudioSource aud;
     public Rigidbody rdbody;
     public Animator ani;
+
+
 
 
     #region Unity 資料類型
@@ -98,13 +100,98 @@ public class ThirdPersonController : MonoBehaviour
 
     #endregion
     #endregion
+
     #region 屬性 Property 
 
+    #region 屬性練習
+    /*
+     
+    //儲存資料，與欄位相同
+    //差異在於:可以設定存取權限
+    //屬性語法:修飾詞 資料類型 屬性名稱{ 取; 存; }
+    public int readAndWrite { get; set; }
+    public int read { get; }
+    // 唯讀屬性:透過get 設定預設值，關鍵字 return 為傳回值
+    public int readValue {
+        get
+        {
+            return 77;
+        }
+    }
+    //唯寫屬性是禁止的
+    //public int Write {  set; }
+    // value 指的是指定的值
+    private int _hp;
+    public int hp {
+        get
+        {
+            return _hp;
+        }
+        set
+        {
+            _hp = value;
+        }
+    }
+    */
     #endregion
-    #region 方法 Method
+    #endregion
 
+    #region 方法 Method
+    //定義與實作 較複雜程式的區塊，功能
+    //方法語法 : 修飾詞 傳回資料類型 方法名稱 (參數1,...參數N){ 程式區塊 }
+    //常用傳回類型 : 無傳回 void - 此方法沒有傳回資料
+    //格式化 排版 ctrl + K + D
+    //名稱顏色為淡黃色 - 沒有被呼叫
+    //名稱顏色為黃色 - 有被呼叫
+    private void Text()
+    {
+        print("我是自訂的方法~~");
+    }
     #endregion
+
     #region 事件 Event 
+    // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
+    // 開始事件:遊戲開始執行一次，處理初始化，取的資料..等等
+    private void Start()
+    {
+        #region  輸出方法
+        /*print("Hello Wolrd");
+
+        Debug.Log("一般訊息");
+        Debug.LogError("錯誤訊息");
+        Debug.LogWarning("警告訊息");*/
+        #endregion
+        #region   屬性練習
+        /*
+        print("欄位資料 - 移動速度:" + speed);
+        print("屬性資料 - 讀寫資料:" + readAndWrite);
+        speed = 10f + speed;
+        readAndWrite = 90;
+        print("修改後的資料");
+        print("欄位資料 - 移動速度:" + speed);
+        print("屬性資料 - 讀寫資料:" + readAndWrite);
+
+        //read = -7;  //唯獨屬性不能設定 set
+        print("唯讀屬性:" + read);
+        print("唯讀屬性:" + readAndWrite);
+
+        //屬性存取練習
+        print("前HP:" + hp);
+        hp = 100;
+        print("後HP:" + hp);*/
+        #endregion
+
+        // 呼叫自訂的方法:方法名稱();
+        Text();
+    }
+
+
+    //更新事件:一秒約執行 60 次 ，60FPS -Frame Per Secound ，用來處理慣性運動，移動物件，監聽玩家輸入按鍵。
+    private void Update()
+    {
+        //print("YO YO YO~");
+    }
+
 
     #endregion
 
