@@ -325,11 +325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070bfb6829ab37d45ad82c8ffe577b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10.5
+  speed: 67
   jump: 100
   floor: 0
   v3checkGroundoffect: {x: 0, y: 0, z: 0}
-  radius: 0.2
+  radius: 0.3
   Audiojump: {fileID: 0}
   Audiofloor: {fileID: 0}
   aniWalk: "\u8D70\u8DEF\u958B\u95DC"
@@ -339,6 +339,7 @@ MonoBehaviour:
   aud: {fileID: 0}
   rdbody: {fileID: 0}
   ani: {fileID: 0}
+  keyJump: 0
 --- !u!1001 &196524913
 PrefabInstance:
   m_ObjectHideFlags: 0

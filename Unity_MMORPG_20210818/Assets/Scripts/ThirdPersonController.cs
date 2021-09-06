@@ -148,6 +148,7 @@ public class ThirdPersonController : MonoBehaviour
     //格式化 排版 ctrl + K + D
     //名稱顏色為淡黃色 - 沒有被呼叫
     //名稱顏色為黃色 - 有被呼叫
+    
     private void Text()
     {
         print("我是自訂的方法~~");
@@ -157,14 +158,28 @@ public class ThirdPersonController : MonoBehaviour
         return 999;
     }
     #region 參數語法
-    /*
+    
     //參數語法 : 資料類型 參數名稱
-    private void Skill(int damage)
+    private void Skill(int damage,string effect = "灰塵特效",string sound ="喀喀喀")
     {
-        print("參數版本-傷害值" + damage);
-        print("技能特效");
+        print("參數版本-傷害值:"  + damage);
+        print("參數版本-技能特效:" + effect);
+        print("參數版本-音效:" + sound);
     }
     
+    /// <summary>
+    /// 計算BMI的方法 BMI=weight/(height*height)
+    /// </summary>
+    /// <param name="weight">體重，單位公斤</param>
+    /// <param name="height">身高，單位公尺</param>
+    /// <param name="name">姓名</param>
+    /// <returns></returns>
+    private float BMI(float weight,float height,string name)
+    {
+        print(name + "的BMI值:");
+        return weight / (height * height);
+    }
+    /*
     //不使用參數，降低維護與擴充性
     private void skill100()
     {
@@ -180,7 +195,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         print("參數版本-傷害值" + 1000);
         print("技能特效");
-    }*/
+    }
+    */
     #endregion
     #endregion
 
@@ -215,7 +231,8 @@ public class ThirdPersonController : MonoBehaviour
         hp = 100;
         print("後HP:" + hp);*/
         #endregion
-
+        print(BMI(73f, 1.7f, "你是誰??"));
+        
         // 呼叫自訂的方法:方法名稱();
         Text();
         //呼叫有傳回值的方法
@@ -224,6 +241,11 @@ public class ThirdPersonController : MonoBehaviour
         print("跳躍值:" + j);
         //2.將傳回方法當成值使用
         print("A跳躍值:" + (RetureJump() + 1));
+
+        Skill(300);
+        Skill(500,sound:"咻咻咻");         //有多個參數可使用指名參數的語法  參數語法:值  
+        
+
     }
 
 
