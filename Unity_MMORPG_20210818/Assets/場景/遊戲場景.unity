@@ -308,6 +308,37 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1512cedd95c371645843ec83d5fa3968, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
+--- !u!1 &181233575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
+  m_PrefabInstance: {fileID: 181233574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &181233576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181233575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070bfb6829ab37d45ad82c8ffe577b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10.5
+  jump: 100
+  floor: 0
+  v3checkGroundoffect: {x: 0, y: 0, z: 0}
+  radius: 0.2
+  Audiojump: {fileID: 0}
+  Audiofloor: {fileID: 0}
+  aniWalk: "\u8D70\u8DEF\u958B\u95DC"
+  aniRun: "\u8DD1\u6B65\u958B\u95DC"
+  aniHurt: "\u53D7\u50B7\u89F8\u767C"
+  aniDie: "\u6B7B\u4EA1\u89F8\u767C"
+  aud: {fileID: 0}
+  rdbody: {fileID: 0}
+  ani: {fileID: 0}
 --- !u!1001 &196524913
 PrefabInstance:
   m_ObjectHideFlags: 0

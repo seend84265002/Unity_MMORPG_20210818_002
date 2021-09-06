@@ -27,10 +27,35 @@ public class ThirdPersonController : MonoBehaviour
     //  Header 標題
     //  Tooltip 提示:滑鼠停留在欄位名稱上會顯示的視窗
     //  Range 範圍:可以使用在數值類型資料上，例如: int , float
-    [Header("移動速度"), Tooltip("用來調整角色移動速度"), Range(1, 500)]
+    [Header("移動速度"), Tooltip("用來調整角色移動速度"), Range(0, 500)]
     public float speed = 10.5f;
-    
+    [Header("跳躍高度"), Tooltip("用來調整角色跳躍高度"), Range(0, 1000)]
+    public int jump = 100;
+
+    [Header("檢查地板資料")] 
+    [Tooltip("檢查角色是否在地板上面")]
+    public bool floor ;
+    public Vector3  v3checkGroundoffect  ;
+    [Range(0, 3)]
+    public float radius = 0.2f ;
+
+    [Header("音效檔案")]
+    public AudioClip Audiojump;
+    public AudioClip Audiofloor;
+
+    [Header("動畫參數")]
+    public string aniWalk = "走路開關" ;
+    public string aniRun  = "跑步開關" ;
+    public string aniHurt = "受傷觸發" ;
+    public string aniDie  = "死亡觸發" ;
+
+    public AudioSource aud;
+    public Rigidbody rdbody;
+    public Animator ani;
+
+
     #region Unity 資料類型
+    /** 練習 Unity  資料類型       UML  應用程式 開發專案 使用
     //顏色 color
     public Color color;
     public Color white = Color.white;                       //內建顏色
@@ -52,11 +77,24 @@ public class ThirdPersonController : MonoBehaviour
     public KeyCode jump = KeyCode.Space;
 
     //遊戲資料類型: 不能指定預設值
+    // 存放 Project 專案內的資料
     public AudioClip sound;              // 音效 mp3 ,ogg ,wav
     public VideoClip videoClip;          // 影片 mp4
     public Sprite sprite;                // 圖片 png ,jpge 不支援 gif  
     public Texture2D texture2d;          // 2D 圖片 png ,jpge 
     public Material material;            // 材質球   
+    [Header("元件")]
+    //元件 Component :屬性面上可以折疊的
+    public Transform tra;
+    public Animation aniold;
+    public Animator aniNew;
+    public Light lig;
+    public Camera cam;
+
+    //綠色蚯蚓
+    //1.建議不要使用的名稱
+    //2.使用過時的API
+    /**/
 
     #endregion
     #endregion
