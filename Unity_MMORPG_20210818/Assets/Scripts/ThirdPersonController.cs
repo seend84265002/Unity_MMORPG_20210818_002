@@ -14,7 +14,7 @@ using UnityEngine.Video;    //引用 影片 API
 public class ThirdPersonController : MonoBehaviour
 {
     #region 欄位 Freld
-    /*
+    
     //儲存遊戲資料，例如:移動速度，跳躍高度..
     //常用四大類型:整數，浮點數，字串，布林值
     //欄位語法:修飾詞，資料類型，欄位名稱(指定 預設值) 結尾
@@ -50,10 +50,10 @@ public class ThirdPersonController : MonoBehaviour
     public string aniHurt = "受傷觸發";
     public string aniDie = "死亡觸發";
 
-    public AudioSource aud;
-    public Rigidbody rdbody;
-    public Animator ani;
-    */
+    private AudioSource aud;
+    private Rigidbody rig;
+    private Animator ani;
+    
 
 
 
@@ -243,6 +243,7 @@ public class ThirdPersonController : MonoBehaviour
     #endregion
     #endregion
 
+    public GameObject playerObject;
     #region 事件 Event 
     // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
     // 開始事件:遊戲開始執行一次，處理初始化，取的資料..等等
@@ -290,13 +291,18 @@ public class ThirdPersonController : MonoBehaviour
         */
         #endregion
 
-        move(100f);
-        move();
-        Floor();
-        Jump();
-        Update();
-
-
+        //move(100f);
+        //move();
+        //Floor();
+        //Jump();
+        //Update();
+        //1.物件欄位名稱，取得元件(類型(元件類型)) 當作 元件類型;
+        aud = playerObject.GetComponent(typeof(AudioSource)) as AudioSource;
+        //2.此腳本遊戲物件，取得原件<泛型>();
+        rig = gameObject.GetComponent<Rigidbody>();
+        //3.取得元件<泛型>();
+        //類別可以使用繼承類別(父親別)的成員，公開或保護
+        ani = GetComponent<Animator>();
     }
 
 
