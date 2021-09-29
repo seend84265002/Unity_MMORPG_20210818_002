@@ -35,10 +35,10 @@ public class ThirdPersonController : MonoBehaviour
 
     [Header("檢查地板資料")]
     [Tooltip("檢查角色是否在地板上面")]
-    public bool floor;
+    public bool v3floor;
     public Vector3 v3checkGroundoffect;
     [Range(0, 3)]
-    public float radius = 0.2f;
+    public float v3radius = 0.2f;
 
     [Header("音效檔案")]
     public AudioClip Audiojump;
@@ -134,10 +134,10 @@ public class ThirdPersonController : MonoBehaviour
             _hp = value;
         }
     }
-    */
+    
 
     public KeyCode keyJump;
-
+    */
 
 
     #endregion
@@ -148,39 +148,56 @@ public class ThirdPersonController : MonoBehaviour
     //方法語法 : 修飾詞 傳回資料類型 方法名稱 (參數1,...參數N){ 程式區塊 }
     //常用傳回類型 : 無傳回 void - 此方法沒有傳回資料
     //格式化 排版 ctrl + K + D
+    //摺疊 ctrl + M O
+    //展開 ctrl + M L
     //名稱顏色為淡黃色 - 沒有被呼叫
     //名稱顏色為黃色 - 有被呼叫
 
     /// <summary>
     /// 移動
     /// </summary>
-    /// <param name="speed">移動速度</param>    
-    private void move(float speed)
+    /// <param name="speedmove">移動速度</param>    
+    private void Move(float speedmove)
     {
-        
+        //請取消 Animator 屬性 Apply Root Motion :勾選時使用動畫位移資訊
+        //鋼體.加速度 = 三維向量，加速度用來控制鋼體 三個軸向的運動速度
+        //前方*輸入值 =移動速度
+        //使用前後左右軸向運動並保持原本的地心引力
+        rig.velocity = Vector3.back * moveInput("Vertical") * -speedmove+
+                       Vector3.left * moveInput("Horizontal") *-speedmove+
+                       Vector3.up * rig.velocity.y;
+
     }
     /// <summary>
     /// 移動按鍵輸入
     /// </summary>
+    /// <param name="axisName">要取的軸向名稱</param>
     /// <returns>回傳值浮點數0</returns>
-    private float move()
+    private float moveInput( string axisName)
     {
-        return 0;
+        return Input.GetAxis(axisName);
     }
     /// <summary>
     /// 檢查地板
     /// </summary>
     /// <returns>回傳布林值false</returns>
-    private bool Floor()
+    private bool CheckGround()
     {
-        return false;
+        Collider[] hits = Physics.OverlapSphere(transform.position +
+            transform.right * v3checkGroundoffect.x +
+            transform.up * v3checkGroundoffect.y +
+            transform.forward * v3checkGroundoffect.z
+            , v3radius, 1<<3); //因為是3所以寫 1<<3   以此類推  10就是 1<<10
+        //print("球體碰到第一個物件 : " + hits[0].name);
+        // 傳回 碰撞陣列數量 > 0 ，只要碰到指定圖層，物件就代表在地面上 
+        return hits.Length>0;
     }
     /// <summary>
     /// 跳躍
     /// </summary>
     private void Jump()
     {
-      
+        print("球體碰到第一個物件 : " + CheckGround());
     }
     /// <summary>
     /// 更新動畫
@@ -310,9 +327,32 @@ public class ThirdPersonController : MonoBehaviour
     private void Update()
     {
         //print("YO YO YO~");
+        //Move(speed);
+        CheckGround();
+        Jump();
     }
 
+    
+     
+    // 固定更新事件 : 固定 0.02 秒執行一次
+    //用來處理物理行為: 例如 Rigidbody API
+    private void FixedUpdate()
+    {
+        //Move(0);
+    }
+    private void OnDrawGizmos()
+    {
+        //1.指定 顏色
+        //2.繪製圖形
 
+        Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
+        // transform 與此腳本在同階層的 transform 元件
+        Gizmos.DrawSphere(transform.position+
+            transform.right*v3checkGroundoffect.x+
+            transform.up*v3checkGroundoffect.y+
+            transform.forward*v3checkGroundoffect.z
+            , v3radius);   //Gizmos.DrawSphere(座標 x y z ，半徑)
+    }
     #endregion
 
 

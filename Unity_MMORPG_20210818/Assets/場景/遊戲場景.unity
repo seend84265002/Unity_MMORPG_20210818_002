@@ -260,15 +260,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.679405
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.9990864
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50.419212
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -303,9 +303,17 @@ PrefabInstance:
       value: Female_04_V01
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 1512cedd95c371645843ec83d5fa3968, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
 --- !u!1 &181233575 stripped
@@ -327,16 +335,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10.5
   jump: 100
-  floor: 0
+  v3floor: 0
   v3checkGroundoffect: {x: 0, y: 0, z: 0}
-  radius: 0.2
+  v3radius: 0.15
   Audiojump: {fileID: 0}
   Audiofloor: {fileID: 0}
   aniWalk: "\u8D70\u8DEF\u958B\u95DC"
   aniRun: "\u8DD1\u6B65\u958B\u95DC"
   aniHurt: "\u53D7\u50B7\u89F8\u767C"
   aniDie: "\u6B7B\u4EA1\u89F8\u767C"
-  keyJump: 0
   playerObject: {fileID: 181233575}
 --- !u!136 &181233577
 CapsuleCollider:
@@ -366,7 +373,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!82 &181233582
 AudioSource:
@@ -1240,7 +1247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783625786}
   m_LocalRotation: {x: -0.030287039, y: -0.91339844, z: 0.06915972, w: -0.4000036}
-  m_LocalPosition: {x: 50, y: 10, z: 50}
+  m_LocalPosition: {x: 24.31, y: 20.26, z: 78.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
