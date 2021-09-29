@@ -260,11 +260,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48
+      value: 48.103
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 5.017
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -334,16 +334,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10.5
-  jump: 100
+  jump: 350
   v3floor: 0
   v3checkGroundoffect: {x: 0, y: 0, z: 0}
-  v3radius: 0.15
+  v3radius: 0.1
   Audiojump: {fileID: 0}
   Audiofloor: {fileID: 0}
   aniWalk: "\u8D70\u8DEF\u958B\u95DC"
   aniRun: "\u8DD1\u6B65\u958B\u95DC"
   aniHurt: "\u53D7\u50B7\u89F8\u767C"
   aniDie: "\u6B7B\u4EA1\u89F8\u767C"
+  aniJump: "\u8DF3\u8000\u89F8\u767C"
+  aniIsFloor: "\u662F\u5426\u5728\u5730\u677F\u4E0A"
   playerObject: {fileID: 181233575}
 --- !u!136 &181233577
 CapsuleCollider:
@@ -761,7 +763,7 @@ GameObject:
   - component: {fileID: 422005208}
   - component: {fileID: 422005207}
   - component: {fileID: 422005206}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "\u5730\u5F62"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1247,7 +1249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783625786}
   m_LocalRotation: {x: -0.030287039, y: -0.91339844, z: 0.06915972, w: -0.4000036}
-  m_LocalPosition: {x: 24.31, y: 20.26, z: 78.27}
+  m_LocalPosition: {x: 45.56, y: 6.61, z: 53.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

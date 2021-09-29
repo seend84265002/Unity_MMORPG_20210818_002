@@ -49,11 +49,13 @@ public class ThirdPersonController : MonoBehaviour
     public string aniRun = "跑步開關";
     public string aniHurt = "受傷觸發";
     public string aniDie = "死亡觸發";
+    public string aniJump = "跳耀觸發";
+    public string aniIsFloor = "是否在地板上";
 
     private AudioSource aud;
     private Rigidbody rig;
     private Animator ani;
-    
+
 
 
 
@@ -103,7 +105,7 @@ public class ThirdPersonController : MonoBehaviour
     #endregion
 
     #region 屬性 Property 
-
+    private bool keyJump { get=> Input.GetKeyDown(KeyCode.Space); }
     #region 屬性練習
     
      
@@ -166,6 +168,7 @@ public class ThirdPersonController : MonoBehaviour
         rig.velocity = Vector3.back * moveInput("Vertical") * -speedmove+
                        Vector3.left * moveInput("Horizontal") *-speedmove+
                        Vector3.up * rig.velocity.y;
+        
 
     }
     /// <summary>
@@ -190,6 +193,9 @@ public class ThirdPersonController : MonoBehaviour
             , v3radius, 1<<3); //因為是3所以寫 1<<3   以此類推  10就是 1<<10
         //print("球體碰到第一個物件 : " + hits[0].name);
         // 傳回 碰撞陣列數量 > 0 ，只要碰到指定圖層，物件就代表在地面上 
+        v3floor = hits.Length > 0;
+
+
         return hits.Length>0;
     }
     /// <summary>
@@ -197,7 +203,24 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        print("球體碰到第一個物件 : " + CheckGround());
+        //print("球體碰到第一個物件 : " + CheckGround());
+        //並且 &&
+        //如果 在地面上 並且按下空白鍵 就跳耀
+        //if (CheckGround() && Input.GetKeyDown(KeyCode.Space))
+        if(CheckGround()&& keyJump)
+        {
+            //print("跳起來");
+            rig.AddForce(transform.up * jump);
+        }
+    }
+
+    private void UpdateAnimation()
+    {
+        ani.SetBool(aniWalk, moveInput("Vertical") != 0 ||
+                             moveInput("Horizontal") != 0);
+        ani.SetBool(aniIsFloor, v3floor);
+        if (keyJump) ani.SetTrigger(aniJump);   
+        //ani.SetBool(aniWalk, true);
     }
     /// <summary>
     /// 更新動畫
@@ -325,11 +348,12 @@ public class ThirdPersonController : MonoBehaviour
 
     //更新事件:一秒約執行 60 次 ，60FPS -Frame Per Secound ，用來處理慣性運動，移動物件，監聽玩家輸入按鍵。
     private void Update()
-    {
+    {   //CheckGround();
         //print("YO YO YO~");
-        //Move(speed);
-        CheckGround();
+               
         Jump();
+        UpdateAnimation();
+        Move(speed);
     }
 
     
