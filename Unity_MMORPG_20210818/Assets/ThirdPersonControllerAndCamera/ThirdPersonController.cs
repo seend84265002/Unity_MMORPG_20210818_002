@@ -56,10 +56,15 @@ namespace Win {
         public string aniJump = "跳耀觸發";
         public string aniIsFloor = "是否在地板上";
 
+        public GameObject playerObject;
+
+        private ThridPersonCamera thridPersonCamera;
         private AudioSource aud;
         private Rigidbody rig;
         private Animator ani;
 
+        [Header("面向速度"), Range(0, 50)]
+        public float speedLookAt = 2;
 
 
 
@@ -99,8 +104,8 @@ namespace Win {
             //鋼體.加速度 = 三維向量，加速度用來控制鋼體 三個軸向的運動速度
             //前方*輸入值 =移動速度
             //使用前後左右軸向運動並保持原本的地心引力
-            rig.velocity = Vector3.back * moveInput("Vertical") * -speedmove +
-                           Vector3.left * moveInput("Horizontal") * -speedmove +
+            rig.velocity = transform.forward * MoveInput("Vertical") * speedmove +
+                           transform.right * MoveInput("Horizontal") * speedmove +
                            Vector3.up * rig.velocity.y;
 
 
@@ -110,7 +115,7 @@ namespace Win {
         /// </summary>
         /// <param name="axisName">要取的軸向名稱</param>
         /// <returns>回傳值浮點數0</returns>
-        private float moveInput(string axisName)
+        private float MoveInput(string axisName)
         {
             return Input.GetAxis(axisName);
         }
@@ -148,36 +153,39 @@ namespace Win {
                 aud.PlayOneShot( Audiojump, volumeRandom);
             }
         }
-
+        /// <summary>
+        /// 更新動畫
+        /// </summary>
         private void UpdateAnimation()
         {
-            ani.SetBool(aniWalk, moveInput("Vertical") != 0 ||
-                                 moveInput("Horizontal") != 0);
+            ani.SetBool(aniWalk, MoveInput("Vertical") != 0 ||
+                                 MoveInput("Horizontal") != 0);
             ani.SetBool(aniIsFloor, v3floor);
             if (keyJump) ani.SetTrigger(aniJump);
             //ani.SetBool(aniWalk, true);
         }
-        /// <summary>
-        /// 更新動畫
-        /// </summary>
-        private void updata()
+
+
+        private void LookAtForward()
         {
+            if (Mathf.Abs(MoveInput("Vertical")) > 0.1f)
+            {//取得前方角度 = 四元 .面相角度(前方座標-本身座標)
+                Quaternion angle = Quaternion.LookRotation(thridPersonCamera.posForawrd - transform.position);
+                //此物件的角度 = 四元 .差件
+                transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime*speedLookAt);
 
+            }
         }
-
     
       
         #endregion
 
-        public GameObject playerObject;
+
         #region 事件 Event 
         // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
         // 開始事件:遊戲開始執行一次，處理初始化，取的資料..等等
         private void Start()
         {
-           
-          
-
             //1.物件欄位名稱，取得元件(類型(元件類型)) 當作 元件類型;
             aud = playerObject.GetComponent(typeof(AudioSource)) as AudioSource;
             //2.此腳本遊戲物件，取得原件<泛型>();
@@ -185,6 +193,9 @@ namespace Win {
             //3.取得元件<泛型>();
             //類別可以使用繼承類別(父親別)的成員，公開或保護
             ani = GetComponent<Animator>();
+            //攝影機類別= 透過類型尋找物件<泛型>();
+            //FindObjectOfType 不要放在 Updata 內使用會造成大量效能負擔
+            thridPersonCamera = FindObjectOfType<ThridPersonCamera>();
         }
 
 
@@ -195,7 +206,8 @@ namespace Win {
 
             Jump();
             UpdateAnimation();
-            Move(speed);
+            LookAtForward();
+            //Move(speed);
         }
 
 
@@ -204,7 +216,7 @@ namespace Win {
         //用來處理物理行為: 例如 Rigidbody API
         private void FixedUpdate()
         {
-            //Move(0);
+            Move(speed);
         }
         private void OnDrawGizmos()
         {

@@ -303,6 +303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u5973\u4E3B\u89D2"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 4580fbfcd635e4a408b519ae7dd7d6ae, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -348,6 +352,7 @@ MonoBehaviour:
   aniJump: "\u8DF3\u8000\u89F8\u767C"
   aniIsFloor: "\u662F\u5426\u5728\u5730\u677F\u4E0A"
   playerObject: {fileID: 181233575}
+  speedLookAt: 35.2
 --- !u!136 &181233577
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1293,8 +1298,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 181233580}
   speedTrack: 10
-  speedTurnHorizontal: 50
-  speedTurnVertical: 50
+  speedTurnHorizontal: 10
+  speedTurnVertical: 10
+  limitAngleX: {x: -0.2, y: 0.2}
+  limitAngleFormTarget: {x: -0.2, y: 0}
 --- !u!4 &904608935
 Transform:
   m_ObjectHideFlags: 0
