@@ -1,7 +1,8 @@
 using UnityEngine;          //引用 Unity API  (倉庫，資料與功能)
 using UnityEngine.Video;    //引用 影片 API    
 
-namespace Win { 
+namespace Win.Practice
+{
 
 
 
@@ -63,37 +64,107 @@ namespace Win {
 
 
 
+        #region Unity 資料類型
+        /** 練習 Unity  資料類型       UML  應用程式 開發專案 使用
+        //顏色 color
+        public Color color;
+        public Color white = Color.white;                       //內建顏色
+        public Color yellow = Color.yellow;
+        public Color color1 = new Color(0.5f, 0.5f, 0);         //自訂顏色 RGB
+        public Color color2 = new Color(0, 0.5f, 0.5f, 0.5f);   //自訂顏色 RGBA   
+        //座標 Vector2-4
+        public Vector2 v2;                                      // Vector2 2維空間函數   (x,y)
+        public Vector2 v2Right = Vector2.right;                 //往右邊
+        public Vector2 v2UP = Vector2.up;                       //往前走
+        public Vector2 v2One = Vector2.one;                         
+        public Vector2 v2Custom = new Vector2(7.5f, 100.9f);
+        public Vector3 v3 = new Vector3(1, 2, 3);               // Vector3  3維空間函數  (x,y,z)
+        public Vector3 v3Forward = Vector3.forward;
+        public Vector4 v4 = new Vector4(2, 1, 3, 5);            // Vector4  4維空間函數  (x,y,z,角度)
+        //按鍵 列舉資料 enum
+        public KeyCode key;
+        public KeyCode move = KeyCode.W;
+        public KeyCode jump = KeyCode.Space;
 
+        //遊戲資料類型: 不能指定預設值
+        // 存放 Project 專案內的資料
+        public AudioClip sound;              // 音效 mp3 ,ogg ,wav
+        public VideoClip videoClip;          // 影片 mp4
+        public Sprite sprite;                // 圖片 png ,jpge 不支援 gif  
+        public Texture2D texture2d;          // 2D 圖片 png ,jpge 
+        public Material material;            // 材質球   
+        [Header("元件")]
+        //元件 Component :屬性面上可以折疊的
+        public Transform tra;
+        public Animation aniold;
+        public Animator aniNew;
+        public Light lig;
+        public Camera cam;
+
+        //綠色蚯蚓
+        //1.建議不要使用的名稱
+        //2.使用過時的API
+        /**/
+
+        #endregion
         #endregion
 
         #region 屬性 Property 
-        /// <summary>
-        /// 跳耀
-        /// </summary>
-        /// <paran mane="keyJump">跳耀按鍵</paran>
         private bool keyJump { get => Input.GetKeyDown(KeyCode.Space); }
+        #region 屬性練習
+
+
+        //儲存資料，與欄位相同
+        //差異在於:可以設定存取權限
+        //屬性語法:修飾詞 資料類型 屬性名稱{ 取; 存; }
+        /*
+        public int readAndWrite { get; set; }
+        public int read { get; }
+        // 唯讀屬性:透過get 設定預設值，關鍵字 return 為傳回值
+        public int readValue {
+            get
+            {
+                return 77;
+            }
+        }
+        //唯寫屬性是禁止的
+        //public int Write {  set; }
+        // value 指的是指定的值
+        private int _hp;
+        public int hp {
+            get
+            {
+                return _hp;
+            }
+            set
+            {
+                _hp = value;
+            }
+        }
+
+
+        public KeyCode keyJump;
+        */
+
+
+        #endregion
+        #endregion
+
+        #region 方法 Method
+        //定義與實作 較複雜程式的區塊，功能
+        //方法語法 : 修飾詞 傳回資料類型 方法名稱 (參數1,...參數N){ 程式區塊 }
+        //常用傳回類型 : 無傳回 void - 此方法沒有傳回資料
+        //格式化 排版 ctrl + K + D
+        //摺疊 ctrl + M O
+        //展開 ctrl + M L
+        //名稱顏色為淡黃色 - 沒有被呼叫
+        //名稱顏色為黃色 - 有被呼叫
+
         /// <summary>
-        /// 隨機音效音量
+        /// 移動
         /// </summary>
-        /// <paran name="volumeRandom">音效音量</paran>
-        private float volumeRandom { get => Random.Range(0.7f, 1.2f); }
-    #endregion
-
-    #region 方法 Method
-    //定義與實作 較複雜程式的區塊，功能
-    //方法語法 : 修飾詞 傳回資料類型 方法名稱 (參數1,...參數N){ 程式區塊 }
-    //常用傳回類型 : 無傳回 void - 此方法沒有傳回資料
-    //格式化 排版 ctrl + K + D
-    //摺疊 ctrl + M O
-    //展開 ctrl + M L
-    //名稱顏色為淡黃色 - 沒有被呼叫
-    //名稱顏色為黃色 - 有被呼叫
-
-    /// <summary>
-    /// 移動
-    /// </summary>
-    /// <param name="speedmove">移動速度</param>    
-    private void Move(float speedmove)
+        /// <param name="speedmove">移動速度</param>    
+        private void Move(float speedmove)
         {
             //請取消 Animator 屬性 Apply Root Motion :勾選時使用動畫位移資訊
             //鋼體.加速度 = 三維向量，加速度用來控制鋼體 三個軸向的運動速度
@@ -127,8 +198,9 @@ namespace Win {
                 , v3radius, 1 << 3); //因為是3所以寫 1<<3   以此類推  10就是 1<<10
                                      //print("球體碰到第一個物件 : " + hits[0].name);
                                      // 傳回 碰撞陣列數量 > 0 ，只要碰到指定圖層，物件就代表在地面上 
-            if (!v3floor && hits.Length > 0) aud.PlayOneShot(Audiofloor, volumeRandom);
             v3floor = hits.Length > 0;
+
+
             return hits.Length > 0;
         }
         /// <summary>
@@ -144,8 +216,6 @@ namespace Win {
             {
                 //print("跳起來");
                 rig.AddForce(transform.up * jump);
-
-                aud.PlayOneShot( Audiojump, volumeRandom);
             }
         }
 
@@ -165,8 +235,57 @@ namespace Win {
 
         }
 
-    
-      
+        /*
+        private void Text()
+        {
+            print("我是自訂的方法~~");
+        }
+        private int RetureJump()
+        {
+            return 999;
+        }
+        */
+        #region 參數語法
+        /*
+        //參數語法 : 資料類型 參數名稱
+        private void Skill(int damage,string effect = "灰塵特效",string sound ="喀喀喀")
+        {
+            print("參數版本-傷害值:"  + damage);
+            print("參數版本-技能特效:" + effect);
+            print("參數版本-音效:" + sound);
+        }
+
+        /// <summary>
+        /// 計算BMI的方法 BMI=weight/(height*height)
+        /// </summary>
+        /// <param name="weight">體重，單位公斤</param>
+        /// <param name="height">身高，單位公尺</param>
+        /// <param name="name">姓名</param>
+        /// <returns></returns>
+        private float BMI(float weight,float height,string name)
+        {
+            print(name + "的BMI值:");
+            return weight / (height * height);
+        }
+
+        //不使用參數，降低維護與擴充性
+        private void skill100()
+        {
+            print("參數版本-傷害值" + 100);
+            print("技能特效");
+        }
+        private void skill200()
+        {
+            print("參數版本-傷害值" + 200);
+            print("技能特效");
+        }
+        private void skill1000()
+        {
+            print("參數版本-傷害值" + 1000);
+            print("技能特效");
+        }
+        */
+        #endregion
         #endregion
 
         public GameObject playerObject;
@@ -175,9 +294,53 @@ namespace Win {
         // 開始事件:遊戲開始執行一次，處理初始化，取的資料..等等
         private void Start()
         {
-           
-          
+            #region  輸出方法
+            /*print("Hello Wolrd");
 
+            Debug.Log("一般訊息");
+            Debug.LogError("錯誤訊息");
+            Debug.LogWarning("警告訊息");*/
+            #endregion
+            #region   屬性練習
+            /*
+            print("欄位資料 - 移動速度:" + speed);
+            print("屬性資料 - 讀寫資料:" + readAndWrite);
+            speed = 10f + speed;
+            readAndWrite = 90;
+            print("修改後的資料");
+            print("欄位資料 - 移動速度:" + speed);
+            print("屬性資料 - 讀寫資料:" + readAndWrite);
+
+            //read = -7;  //唯獨屬性不能設定 set
+            print("唯讀屬性:" + read);
+            print("唯讀屬性:" + readAndWrite);
+
+            //屬性存取練習
+            print("前HP:" + hp);
+            hp = 100;
+            print("後HP:" + hp);
+
+            print(BMI(73f, 1.7f, "你是誰??"));
+
+            // 呼叫自訂的方法:方法名稱();
+            Text();
+            //呼叫有傳回值的方法
+            //1.區域變數指的是指定傳回值-區域變數僅能在此結構(大括號)內存取
+            int j = RetureJump();
+            print("跳躍值:" + j);
+            //2.將傳回方法當成值使用
+            print("A跳躍值:" + (RetureJump() + 1));
+
+            Skill(300);
+            Skill(500,sound:"咻咻咻");         //有多個參數可使用指名參數的語法  參數語法:值  
+            */
+            #endregion
+
+            //move(100f);
+            //move();
+            //Floor();
+            //Jump();
+            //Update();
             //1.物件欄位名稱，取得元件(類型(元件類型)) 當作 元件類型;
             aud = playerObject.GetComponent(typeof(AudioSource)) as AudioSource;
             //2.此腳本遊戲物件，取得原件<泛型>();
@@ -191,7 +354,8 @@ namespace Win {
 
         //更新事件:一秒約執行 60 次 ，60FPS -Frame Per Secound ，用來處理慣性運動，移動物件，監聽玩家輸入按鍵。
         private void Update()
-        {   
+        {   //CheckGround();
+            //print("YO YO YO~");
 
             Jump();
             UpdateAnimation();
