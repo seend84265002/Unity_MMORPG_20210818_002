@@ -109,7 +109,7 @@ namespace Win
         /// </summary>
         private void LimitAngleXAndZFTarget()
         {
-            print("攝影機的角度資訊: " +transform.rotation);
+            //print("攝影機的角度資訊: " +transform.rotation);
             Quaternion angle = transform.rotation;                                               // 取得四位元角度
             angle.x = Mathf.Clamp(angle.x, limitAngleX.x, limitAngleX.y);                          // 夾住角度X軸
             angle.z = Mathf.Clamp(angle.z, limitAngleFormTarget.x, limitAngleFormTarget.y);      // 夾住角度z軸
