@@ -14,6 +14,8 @@ namespace Wen.Dialogue
     [CreateAssetMenu(menuName = "Wen/對話資料", fileName = "NPC 對話資料")]
     public class DataDialogue : ScriptableObject
     {
+        [Header("對話者名稱")]
+        public string nameDialouge;
         //TextArea 字串用屬性 ，可設定行數
         [Header("任務前對話內容"), TextArea(2, 7)]
         public string[] beforeMission;

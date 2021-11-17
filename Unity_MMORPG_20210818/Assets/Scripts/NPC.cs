@@ -65,6 +65,7 @@ namespace Wen.Dialogue
             {
                 dialogueSystem.Dialogue(dataDialogue);
             }
+            else if (!checkPlayer()) dialogueSystem.StopDialogue();
         }
             
        
