@@ -17,7 +17,7 @@ namespace Wen.Dialogue
         [Header("對話間隔"), Range(0, 10)]
         public float dialogueInterval = 0.03f;
         [Header("對話的按鍵")]
-        public KeyCode dialogueKey = KeyCode.F;
+        public KeyCode dialogueKey = KeyCode.Mouse0;
         /// <summary>
         /// 開始對話
         /// </summary>
