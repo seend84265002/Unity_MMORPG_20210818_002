@@ -1,6 +1,7 @@
 using System.Collections; //呼叫協成程序
 using UnityEngine;
 using UnityEngine.AI;
+using Wen.Dialogue;
 namespace Wen.Enemy
 {
     /// <summary>
@@ -32,6 +33,9 @@ namespace Wen.Enemy
         public float delaySendDamage = 0.5f;
         [Header("面向玩家的速度"), Range(0, 50)]
         public float speendLookAt = 10;
+        [Header("NPC 名稱")]
+        public string nameNPC = "小朋友";
+
 
 
         #endregion
@@ -62,6 +66,10 @@ namespace Wen.Enemy
         private bool isTrack; //使否追蹤狀態
         private string paramterAttack="攻擊觸發";
         private bool isAttack;
+        private bool targetIsDead;
+        private NPC npc;
+        private HurtSystem hurtSystem;
+
         #endregion
 
 
@@ -86,8 +94,10 @@ namespace Wen.Enemy
 
             //繪製方形，需要跟者角色旋轉時請使用 matrix 指定座標角度與尺寸
             Gizmos.matrix = Matrix4x4.TRS(
-                transform.position+transform.right*v3AttackOffset.x+
-                transform.up*v3AttackOffset.y+transform.forward*v3AttackOffset.z, 
+                transform.position+
+                transform.right*v3AttackOffset.x+
+                transform.up*v3AttackOffset.y+
+                transform.forward*v3AttackOffset.z, 
                 transform.rotation,
                 transform.localScale);    //取的角度
 
@@ -107,8 +117,15 @@ namespace Wen.Enemy
             ani = GetComponent<Animator>();
             nma = GetComponent<NavMeshAgent>();
             nma.speed = speed;
+            hurtSystem = GetComponent<HurtSystem>();
+
             traplayer = GameObject.Find(nameplayer).transform;
+            npc = GameObject.Find(nameNPC).GetComponent<NPC>();
+            //受傷系統 - 死亡事件 觸發時 請 NPC 更新數量
+            //AddListener(方法) 添加 監聽器 (方法)
+            hurtSystem.onDead.AddListener(npc.UpdataMissionCount);
             nma.SetDestination(transform.position);             //導覽器 一開始就先動作
+            
         }
 
         private void Update()
@@ -149,7 +166,7 @@ namespace Wen.Enemy
         /// </summary>
         private void Idle()
         {
-            if (PlayerInTrackRange) state = StateEmeny.Track;       //如果玩家進入追蹤圍內 切換追蹤狀態
+            if (!targetIsDead && PlayerInTrackRange) state = StateEmeny.Track;       //如果玩家進入追蹤圍內 切換追蹤狀態
             #region  進入狀態
             if (isIdle) return;
             isIdle = true;
@@ -176,7 +193,7 @@ namespace Wen.Enemy
         private void Walk()
         {
             #region  持續執行區域
-            if (PlayerInTrackRange) state = StateEmeny.Track;       //如果玩家進入追蹤圍內 切換追蹤狀態
+            if (!targetIsDead && PlayerInTrackRange) state = StateEmeny.Track;       //如果玩家進入追蹤圍內 切換追蹤狀態
             nma.SetDestination(v3RandomWalkFinal);                          //代理器 ， 設定目的地(座標)
             ani.SetBool(parameterIdleWalk, nma.remainingDistance > 0.1f);   //走路動畫-離目標距離大於0.1時候走路
             #endregion
@@ -260,15 +277,22 @@ namespace Wen.Enemy
                 transform.up * v3AttackOffset.y + 
                 transform.forward * v3AttackOffset.z,
                 v3AttackSize / 2, Quaternion.identity, 1 << 6
-                    );
-
+                );
+            //if (hits.Length > 0) print(hits[0].name);
             //如果碰撞物件數量是大於0 傳送攻擊力給碰撞物件受傷系統
-            if (hits.Length > 0) hits[0].GetComponent<HurtSystem>().Hurt(attack);       
-            
+            if (hits.Length > 0)  targetIsDead= hits[0].GetComponent<HurtSystem>().Hurt(attack);
+            if (targetIsDead) TargetDead();
             float waitToNextAttack = timeAttack - delaySendDamage;          //計算剩餘冷卻時間
             yield return new WaitForSeconds(waitToNextAttack);              //等待
             
             isAttack = false;                                               //恢復 攻擊狀態
+        }
+        private void TargetDead()
+        {
+            state = StateEmeny.Walk;
+            isIdle = false;
+            isWalk = false;
+            nma.isStopped = false;
         }
         /// <summary>
         /// 面相玩家

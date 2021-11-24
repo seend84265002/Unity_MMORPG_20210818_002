@@ -57,15 +57,17 @@ namespace Wen.Dialogue
             textName.text = "";     //清除對話者
           
             textName.text = data.nameDialouge;
+
+            string[] dialogueContents = data.beforeMission;
             goTriangle.SetActive(false);        //影藏 提示圖示
             //遍尋第一段對話
-            for (int j = 0; j < data.beforeMission.Length; j++)
+            for (int j = 0; j < dialogueContents.Length; j++)
             {
                 textContent.text = "";  //清除對話內容
                 //遍尋對話每一個字    
-                for (int i = 0; i < data.beforeMission[j].Length; i++)
+                for (int i = 0; i < dialogueContents[j].Length; i++)
                 {
-                    textContent.text += data.beforeMission[j][i];
+                    textContent.text += dialogueContents[j][i];
                     yield return new WaitForSeconds(dialogueInterval);
                 }
                 goTriangle.SetActive(true);         //顯示 提示圖示

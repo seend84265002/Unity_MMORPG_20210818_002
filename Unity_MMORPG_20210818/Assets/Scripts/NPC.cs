@@ -20,6 +20,10 @@ namespace Wen.Dialogue
 
         [Header("對話系統")]
         public DialogueSystem dialogueSystem;
+        /// <summary>
+        /// 目前任務數量
+        /// </summary>
+        private int countCurrent;
         private void OnDrawGizmos()
         {
             Gizmos.color = new Color(0, 1, 0.2f, 0.3f);
@@ -67,8 +71,16 @@ namespace Wen.Dialogue
             }
             else if (!checkPlayer()) dialogueSystem.StopDialogue();
         }
-            
-       
+            /// <summary>
+            /// 更新任務需求數量
+            /// 任務目標物件得到或死亡後處理
+            /// </summary>
+        public void UpdataMissionCount()
+        {
+            countCurrent++;
+            // 目前數量 等於 需求數量 狀態 等於 完成任務
+            if (countCurrent == dataDialogue.countNeed) dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+        }
 
     }
 }

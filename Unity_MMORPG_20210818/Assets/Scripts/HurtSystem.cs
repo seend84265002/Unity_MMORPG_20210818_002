@@ -41,14 +41,19 @@ namespace Wen
         /// </summary>
         /// <param name="damage">接收到的傷害</param>
         //  成員要被子類別複寫必須加上 virtual 虛擬
-        public virtual void Hurt(float damage)
+        public virtual bool Hurt(float damage)
         {
-            if (ani.GetBool(paramrterDead)) return;     //如果死亡 參數已經勾選就跳出
+            if (ani.GetBool(paramrterDead)) return true;     //如果死亡 參數已經勾選就跳出
             hp -= damage;
             ani.SetTrigger(parameterHurt);
             onHurt.Invoke();
-            if (hp <= 0) Dead();
-
+            if (hp <= 0)
+            {
+                Dead();
+                return ani.GetBool(paramrterDead);
+            }
+            else return false;
+   
         }
         #endregion
         #region 方法 私人

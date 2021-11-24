@@ -17,12 +17,12 @@ namespace Wen
         /// </summary>
         private float hpEffectOriginal;
         // 複寫 父類別 成員 override
-        public override void Hurt(float damage)
+        public override bool Hurt(float damage)
         {
             hpEffectOriginal = hp;
             base.Hurt(damage);      //該成員的父類別基底 父類別內的內容
             StartCoroutine(HpBarEffect());
-
+            return hp <= 0;
         }
         private IEnumerator HpBarEffect()
         {
