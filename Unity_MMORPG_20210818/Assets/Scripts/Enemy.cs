@@ -26,8 +26,14 @@ namespace Wen.Enemy
         [Header("攻擊區域 位移 與尺寸")]
         public Vector3 v3AttackOffset;
         public Vector3 v3AttackSize = Vector3.one;
-        [Header("攻擊時間"), Range(0, 5)]
+        [Header("攻擊冷卻時間"), Range(0, 5)]
         public float timeAttack=2.5f;
+        [Header("攻擊延遲傳送傷害時間"), Range(0, 5)]
+        public float delaySendDamage = 0.5f;
+        [Header("面向玩家的速度"), Range(0, 50)]
+        public float speendLookAt = 10;
+
+
         #endregion
 
         #region 欄位 私人
@@ -93,12 +99,14 @@ namespace Wen.Enemy
 
         }
         #endregion
-
+        /// <summary>
+        /// 事件
+        /// </summary>
         private void Awake()
         {
             ani = GetComponent<Animator>();
             nma = GetComponent<NavMeshAgent>();
-
+            nma.speed = speed;
             traplayer = GameObject.Find(nameplayer).transform;
             nma.SetDestination(transform.position);             //導覽器 一開始就先動作
         }
@@ -150,7 +158,6 @@ namespace Wen.Enemy
             ani.SetBool(parameterIdleWalk, false);
             StartCoroutine(IdleEffect());
         }
-
         private IEnumerator IdleEffect()
         {
             float randomWait = Random.Range(v2RandomWait.x, v2RandomWait.y);
@@ -162,6 +169,7 @@ namespace Wen.Enemy
             #endregion
 
         }
+
         /// <summary>
         /// 走路 隨機時間
         /// </summary>
@@ -197,10 +205,10 @@ namespace Wen.Enemy
             #endregion
 
         }
+
         /// <summary>
         /// 追蹤玩家
         /// </summary>
-
         private void Track()
         {
             #region
@@ -217,23 +225,59 @@ namespace Wen.Enemy
             if (nma.remainingDistance <= rangeAttack) state = StateEmeny.Attack;            //距離判定 攻擊狀態
 
         }
+
+        /// <summary>
+        /// 攻擊玩家
+        /// </summary>
         private void Attack()
         {
             nma.isStopped = true;                                       //導覽器 停止
             ani.SetBool(parameterIdleWalk, false);                      //停止走路
             nma.SetDestination(traplayer.position);
+            LookAtPlayer();
             if (nma.remainingDistance > rangeAttack) state = StateEmeny.Track;            //距離判定 追蹤狀態
             
-            if (isAttack) return;
+            if (isAttack) return;               //如果正在攻擊中 跳出(避免重複攻擊)
+            isAttack = true;                    //正在攻擊中
+
             ani.SetTrigger(paramterAttack);             //攻擊動作
 
+            StartCoroutine(DelaySendDamageToTarget());      //啟動延遲傳送傷害給目標協成
+            
+
+        }
+        /// <summary>
+        /// 延遲傳送傷害給目標
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator DelaySendDamageToTarget()
+        {
+            yield return new WaitForSeconds(delaySendDamage);
+            //物理 盒形碰撞 (中心點-一半尺寸，角度，圖層)
             Collider[] hits = Physics.OverlapBox(
-                transform.position + transform.right * v3AttackOffset.x + transform.up * v3AttackOffset.y + transform.forward * v3AttackOffset.z,
+                transform.position + 
+                transform.right * v3AttackOffset.x + 
+                transform.up * v3AttackOffset.y + 
+                transform.forward * v3AttackOffset.z,
                 v3AttackSize / 2, Quaternion.identity, 1 << 6
                     );
-            if (hits.Length > 0) print("攻擊到的物件:" + hits[0].name);
-            isAttack = true;
 
+            //如果碰撞物件數量是大於0 傳送攻擊力給碰撞物件受傷系統
+            if (hits.Length > 0) hits[0].GetComponent<HurtSystem>().Hurt(attack);       
+            
+            float waitToNextAttack = timeAttack - delaySendDamage;          //計算剩餘冷卻時間
+            yield return new WaitForSeconds(waitToNextAttack);              //等待
+            
+            isAttack = false;                                               //恢復 攻擊狀態
+        }
+        /// <summary>
+        /// 面相玩家
+        /// </summary>
+        private void LookAtPlayer()
+        {
+            Quaternion angle = Quaternion.LookRotation(traplayer.position - transform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speendLookAt);
+            ani.SetBool(parameterIdleWalk, transform.rotation != angle);
         }
 
     }
