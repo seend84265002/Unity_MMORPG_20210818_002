@@ -101,7 +101,7 @@ namespace Wen.Enemy
                 transform.rotation,
                 transform.localScale);    //¨úªº¨¤«×
 
-            Gizmos.DrawCube(Vector3.one, v3AttackSize);
+            Gizmos.DrawCube(Vector3.zero, v3AttackSize);
             #endregion
 
 

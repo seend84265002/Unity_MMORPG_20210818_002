@@ -1,0 +1,33 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.16f1 (049d6eca3c44) revision 302446'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 18363.1379; Version 1909; 64bit' Language: 'zh' Physical Memory: 16347 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+F:\Unity\2020.3.16f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+F:/GitHub/Unity_MMORPG_20210818_002/Unity_MMORPG_20210818
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+7503
+Successfully changed project path to: F:/GitHub/Unity_MMORPG_20210818_002/Unity_MMORPG_20210818
+F:/GitHub/Unity_MMORPG_20210818_002/Unity_MMORPG_20210818
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 3267.59 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.16f1 (049d6eca3c44)
+[Subsystems] Discovering subsystems at path F:/Unity/2020.3.16f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path F:/GitHub/Unity_MMORPG_20210818_002/Unity_MMORPG_20210818/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: AMD Radeon (TM) R9 380 Series (ID=0x6939)
+    Vendor:   
+    VRAM:     4070 MB
+    Driver:   27.20.21026.2006
