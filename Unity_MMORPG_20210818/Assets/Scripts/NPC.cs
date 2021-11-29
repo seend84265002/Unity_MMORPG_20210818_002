@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 namespace Wen.Dialogue
 {
     ///<summary>
@@ -10,6 +11,8 @@ namespace Wen.Dialogue
     {
         [Header("對話資料")]
         public DataDialogue dataDialogue;
+        [Header("完成任務的事件")]
+        public UnityEvent onFinish;
         [Header("相關資料"), Range(0, 10)]
         public float checkPlayerRadius = 3f;
         public GameObject goTip;
@@ -29,6 +32,10 @@ namespace Wen.Dialogue
             Gizmos.color = new Color(0, 1, 0.2f, 0.3f);
             Gizmos.DrawSphere(transform.position, checkPlayerRadius);
         }
+        private void Awake()
+        {
+            Initialize();
+        }
 
         private void Update()
         {
@@ -36,6 +43,15 @@ namespace Wen.Dialogue
             LookAtPLayer();
             startDialogue();
         }
+        /// <summary>
+        /// 初始設定
+        /// 恢復狀態為任務前
+        /// </summary>
+        private void Initialize()
+        {
+            dataDialogue.stateNPCMission = StateNPCMission.BeforMission;
+        }
+
 
         /// <summary>
         /// 檢查玩家是否進入 進入後記錄變形資訊
@@ -60,6 +76,8 @@ namespace Wen.Dialogue
             }
         }
 
+        
+
         /// <summary>
         /// 玩家進入範圍內 並且按下指定按鈕 請對話系統執行 開始對話
         /// </summary>
@@ -68,10 +86,13 @@ namespace Wen.Dialogue
             if (checkPlayer() && startDialoguekey)
             {
                 dialogueSystem.Dialogue(dataDialogue);
+                //判斷 如果 NPC 任務前 就將狀態改為任務中
+                if (dataDialogue.stateNPCMission == StateNPCMission.BeforMission)
+                    dataDialogue.stateNPCMission = StateNPCMission.Missionning;
             }
             else if (!checkPlayer()) dialogueSystem.StopDialogue();
         }
-            /// <summary>
+        /// <summary>
             /// 更新任務需求數量
             /// 任務目標物件得到或死亡後處理
             /// </summary>
@@ -79,7 +100,12 @@ namespace Wen.Dialogue
         {
             countCurrent++;
             // 目前數量 等於 需求數量 狀態 等於 完成任務
-            if (countCurrent == dataDialogue.countNeed) dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+            if (countCurrent == dataDialogue.countNeed)
+            {
+                dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+                onFinish.Invoke();
+            }
+
         }
 
     }

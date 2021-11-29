@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 namespace Wen
 {
     public class AttackSystem : MonoBehaviour
@@ -16,6 +17,11 @@ namespace Wen
         public Vector3 v3AttackSize = Vector3.one;
         [Header("攻擊動畫參數")]
         public string parameterAttack = "攻擊圖層觸發";
+        public string paramterWalk = "走路開關";
+        [Header("攻擊事件")]
+        public UnityEvent onAttack;
+        [Header("攻擊圖層遮色片")]
+        public AvatarMask maskAttack;
         #endregion
 
         #region 欄位 私人
@@ -57,8 +63,19 @@ namespace Wen
         /// </summary>
         private void Attack()
         {
+
+            #region 攻擊圖層遮色片處理
+            bool isWalk = ani.GetBool(paramterWalk);
+            //左腳 右腳 左右腳 IK 與根部
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.Root, !isWalk);
+            #endregion
             if (keyAttack && !isAttack)
             {
+                onAttack.Invoke();
                 isAttack = true;
                 ani.SetTrigger(parameterAttack);
                 StartCoroutine(DelayHit());

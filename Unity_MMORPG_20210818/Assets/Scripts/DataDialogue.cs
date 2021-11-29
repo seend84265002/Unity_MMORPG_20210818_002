@@ -28,7 +28,7 @@ namespace Wen.Dialogue
 
         //使用列舉
         //語法: 修飾詞 列舉名稱 自定義欄位名稱
-        [Header("NPC 任務狀態"), Range(0, 100)]
+        [Header("NPC 任務狀態")]
         public StateNPCMission stateNPCMission = StateNPCMission.BeforMission ;
 
     }
